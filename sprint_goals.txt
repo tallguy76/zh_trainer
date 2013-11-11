@@ -1,0 +1,9 @@
+
+Goals for the first sprint (Wednesday 11/13):
+1. Page loads with a vocabulary list embedded in JSON format. (5hr)
+2. Goes through entire list in random order, giving character-recognition drill. Prompts user for right or wrong; user can choose to reply with mouse or keyboard. (5hr)
+3. When user gets to end of the list, page gives statistics and prompts user to review entire list or those he missed. These are iterated in a new random order. (5hr)
+4. At any time, user can switch between stimulus in simplified and traditional characters. (2hr)
+5. When new word is displayed, user can go back to review the last word. (2hr)
+6. Old word animates in the direction of the selected category as the new word is being displayed. (3hr)
+7. Page is responsive down to cell-phone width. (2hr)

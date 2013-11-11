@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Vocabulary trainer</title>
+  <link rel="stylesheet" href="assets/css/normalize.css" type="text/css">
+  <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+
+  <div class="main">
+    <div class="entry"><span lang="zh">說話</span></div>
+    <div class="hint"><span>speak</span></div>
+    <div class="answer"><span>shuō huà</span></div>
+    <div class="alt-pinyin"><span>shot huah</span></div>
+    <div class="alt-char"><span>说话</span></div>
+    <div><button type="button">Show</button>Space</div>
+    <div><button type="button">Hint</button>B</div>
+    <div> <button type="button">Previous</button>Backspace</div>
+    <div> <button type="button">Correct</button>V</div>
+    <div> <button type="button">Not Correct</button>N</div>
+
+ </div>
+
+  <script src="assets/js/zepto.js"></script>
+  <script>
+  var vocab;
+  var v_l = [];
+  $.get("assets/js/imb_v.json", function (data) {
+    vocab = data;
+    v_l = $.parseJSON(vocab);
+  });
+  </script>
+</body>
+</html>
