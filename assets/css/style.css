@@ -2,3 +2,19 @@
   font-family: STFangsong;
   font-size: 44px;
 }
+.hide {
+  visibility: hidden;
+}
+.latent {
+  display: none;
+}
+body {
+  background-color: #EDF2C3;
+}
+#container {
+  max-width: 500px;
+}
+.right {
+  position: relative;
+  left: 150px;
+}
