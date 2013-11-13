@@ -5,7 +5,7 @@
  *
  * Designed and built with all the love in the world by @mdo and @fat.
  */
-var jQuery = window.zepto;
+// var jQuery = window.zepto;
 if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery") }
 
 /* ========================================================================

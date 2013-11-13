@@ -4,179 +4,36 @@
   <meta charset="utf-8">
   <title>Vocabulary trainer</title>
   <link rel="stylesheet" href="assets/css/normalize.css" type="text/css">
+  <link rel="stylesheet" href="assets/css/bootstrap.css" type="text/css">
   <link rel="stylesheet" href="assets/css/style.css" type="text/css">
 </head>
 <body>
-  <div id="container">
+<div id="container">
 
-  <div class="main">
+  <div id="main">
     <div id="entry" class="entry middle"><span lang="zh">說話</span></div>
-    <div id="hint" class="hide right"><span>speak</span></div>
-    <div id="answer" class="hide middle"><span>shuō huà</span></div>
-    <div id="alt-pinyin" class="hide middle"><span>shot huah</span></div>
-    <div id="alt-char" class="hide right"><span class="zh_text">说话</span></div>
+    <div id="hint" class="invisible right"><span>speak</span></div>
+    <div id="answer" class="invisible middle"><span>shuō huà</span></div>
+    <div id="alt-pinyin" class="invisible middle"><span>shot huah</span></div>
+    <div id="alt-char" class="invisible right"><span class="zh_text">说话</span></div>
 
-    <div class="right"> <button id="previous" type="button">Previous</button>Backspace</div>
-    <div class="middle"><button id="show_hint" type="button">Show (English) Hint</button>B</div>
-    <div class="middle"><span> <button id="correct" type="button">Known and Verified</button>V</span>
-    <span> <button id="incorrect" type="button">Not Correct</button>N</span></div>
-    <div class="middle"><button id="show" type="button">Show</button>Space</div>
-    <div class="right"> <button id="toggle_format" type="button">Switch character form</button></div>
-    <div id="summary"></div>
+    <div class="right"> <button id="previous" type="button" class="btn btn-default">Previous</button>Backspace</div>
+    <div class="middle"><button id="show_hint" type="button" class="btn btn-default">Show (English) Hint</button>B</div>
+    <div class="middle"><span> <button id="correct" type="button" class="btn btn-default">Known and Verified</button>V</span>
+    <span> <button id="incorrect" type="button" class="btn btn-default">Not Correct</button>N</span></div>
+    <div class="middle"><button id="show" type="button" class="btn btn-default">Show</button>Space</div>
+    <div class="right" class="btn btn-default"> <button id="toggle_format" type="button" class="btn btn-default">Switch character form</button></div>
+  </div>
+  <div id="summary"></div>
     <div id="restart" class="latent">
-      <div> <button id="review_all" type="button">review all</button></div>
-      <div> <button id="review_incorrect" type="button">review missed</button></div>
+      <div> <button id="review_all" type="button" class="btn btn-default">review all</button></div>
+      <div> <button id="review_incorrect" type="button" class="btn btn-default">review missed</button></div>
     </div>
  </div>
-
+</div>
   <script src="assets/js/jquery-1.10.2.js"></script>
+  <script src="assets/js/bootstrap.js"></script>
   <script src="assets/js/underscore.js"></script>
-  <script>
-  var vocab;
-  var run = [{"trad":"鐵","simp":"铁","pinyin":"tiě","gcr":"tiet","definition":"iron"}]
-  var cur = 0;
-  var lastWrong = false;
-  var incorrect = [];
-  var charFormat = {primary:"trad",secondary:"simp"};
-  var hidden = {entry: false, hint: true, answer: true, "alt-pinyin": true, "alt-char": true};
-  var disabled = {"show": false, previous: true, show_hint: false, correct: true, incorrect: true};
-
-  var loadList =  $.get("assets/js/imb_v.json", function (data) {
-      vocab = $.parseJSON(data);
-    });
-  var showAns = function () {
-    hidden = {entry: false, hint: false, answer: false, "alt-pinyin": false, "alt-char": false};
-    $("#hint").removeClass("hide");
-    $("#answer").removeClass("hide");
-    $("#alt-pinyin").removeClass("hide");
-    $("#alt-char").removeClass("hide");
-    disabled = {"show": true, previous: true, show_hint: true, correct: false, incorrect: false};
-    $("#show").prop( "disabled", true );
-    $("#show_hint").prop( "disabled", true );
-    $("#previous").prop( "disabled", true );
-    $("#correct").prop( "disabled", false );
-    $("#incorrect").prop( "disabled", false );
-  };
-  var hideAns = function () {
-    hidden = {entry: false, hint: true, answer: true, "alt-pinyin": true, "alt-char": true};
-    $("#hint").addClass("hide");
-    $("#answer").addClass("hide");
-    $("#alt-pinyin").addClass("hide");
-    $("#alt-char").addClass("hide");
-    disabled = {"show": false, show_hint: false,previous: false,  correct: true, incorrect: true};
-    $("#show").prop( "disabled", false );
-    $("#show_hint").prop( "disabled", false );
-    $("#previous").prop( "disabled", false );
-    $("#correct").prop( "disabled", true );
-    $("#incorrect").prop( "disabled", true );
-  };
-  var showNext = function () {
-    if(++cur < run.length){
-      hideAns();
-      displayItem(run[cur]);
-    } else {
-      $("#summary").html(run.length + " items, " + incorrect.length + " incorrect");
-      $("#restart").removeClass("latent");
-    }
-  }
-  var showLast = function () {
-    if(cur > 0) cur--;
-    displayItem(run[cur]);
-    showAns();
-    if(lastWrong) incorrect.pop();
-  }
-  var respond = function(name) {
-    if(!disabled[name]) {
-      $("#" + name).trigger("click");
-    }
-  }
-  var doc_ready = $.Deferred();
-  $(doc_ready.resolve);
-  var displayItem = function (obj) {
-    $("#entry").children("span").html(obj[charFormat.primary]);
-    $("#hint").children("span").html(obj.definition);
-    $("#answer").children("span").html(obj.pinyin);
-    $("#alt-pinyin").children("span").html(obj.gcr);
-    $("#alt-char").children("span").html(obj[charFormat.secondary]);
-  };
-  var run_init = function () {
-    cur = 0;
-    incorrect = [];
-    hideAns();
-    $("#previous").prop( "disabled", true );
-    disabled.previous = true;
-    $("#restart").addClass("latent");
-    displayItem(run[cur]);
-  }
-  $.when(loadList, doc_ready)
-  .then(function () {
-    run = _.shuffle(vocab);
-    run_init();
-
-
-    $("#show").on("click", showAns);
-    $("#show_hint").on("click", function () {
-      hidden.hint = false
-      $("#hint").removeClass("hide");
-      disabled.show_hint = true
-      $(this).prop( "disabled", true );
-    });
-    $("#correct").on("click", function () {
-      lastWrong = false;
-      showNext();
-    });
-    $("#incorrect").on("click",function () {
-      incorrect.push(run[cur]);
-      lastWrong = true;
-      showNext();
-    });
-    $("#previous").on("click",showLast);
-    $("#toggle_format").on("click",function () {
-      charFormat = {primary: charFormat.secondary, secondary: charFormat.primary};
-      displayItem(run[cur]);
-    });
-    $("#review_all").on("click",function () {
-      $("#summary").html("<p>Last run: " + run.length + " items, " + incorrect.length + " incorrect</p>" +
-        "<p>Reviewing the entire list<p>"
-      );
-      run = _.shuffle(vocab);
-      run_init();
-    });
-    $("#review_incorrect").on("click",function () {
-      $("#summary").html("<p>Last run: " + run.length + " items, " + incorrect.length + " incorrect</p>" +
-        "<p>Reviewing those missed<p>"
-      );
-      run = _.shuffle(incorrect);
-      run_init();
-    });
-
-    $(document).keydown(function (e) {
-      switch(e.which){
-      case 32:
-        e.preventDefault();
-        respond("show");
-      break;
-      case 66:
-      case 98:
-        e.preventDefault();
-        respond("show_hint");
-      break;
-      case 8:
-        e.preventDefault();
-        respond("previous");
-      break;
-      case 86:
-      case 118:
-        e.preventDefault();
-        respond("correct");
-      break;
-      case 78:
-        e.preventDefault();
-        respond("incorrect");
-      break;
-      }
-    });
-  });
-  </script>
+  <script src="assets/js/app.js"></script>
 </body>
 </html>

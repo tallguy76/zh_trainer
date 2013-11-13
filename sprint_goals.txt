@@ -10,8 +10,8 @@ Goals for the first sprint (Wednesday 11/13):
 
 Goals for the second sprint (Thursday 11/14)
 1,2. 6+7 above.
-3. Load JSON from a user file.
-4. Get JS out of the HTML file.
-5. Write tests for the JS.
-6. Let user shorten the list and review what he's already gone over.
-7. Let user switch to character-recall mode.
+3. Load JSON from a user file. (3hr)
+4. Get JS out of the HTML file. (2hr)
+5. Write tests for the JS. (2hr)
+6. Let user shorten the list and review what he's already gone over. (3hr)
+7. Let user switch to character-recall mode at beginning of run. (3hr)
