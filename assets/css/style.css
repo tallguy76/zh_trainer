@@ -1,4 +1,4 @@
-.entry {
+.primary {
   font-family: STFangsong;
   font-size: 45px;
 }
@@ -14,17 +14,44 @@
 }
 body {
   background-color: #EDF2C3;
-  font-family: "Lucida Grande","Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+  font-family: Garamond, "GaramondNo8", Palatino, Baskerville, "Baskerville Old Face", "Hoefler Text", Times, "Times New Roman", serif;
 }
 #container {
   max-width: 420px;
   margin: auto;
+}
+#display {
   padding-top: 40px;
+  margin-bottom: 20px;
+}
+#toggle_format {
+  margin-top:20px;
+}
+div.inline {
+  display: inline-block;
+  border: 2px solid #111836;
+  padding: 2px;
+  margin: 2px;
+  border-radius: 5px;
 }
 .right {
   position: relative;
-  left: 300px;
+  width: 35%;
+  left: 65%;
+  text-align: center;
 }
 .middle {
   text-align: center;
+}
+@media screen and (max-width: 520px) {
+  .right {
+    width: 45%;
+    left: 55%;
+  }
+}
+@media screen and (max-width: 410px) {
+  .right {
+    width: 50%;
+    left: 50%;
+  }
 }

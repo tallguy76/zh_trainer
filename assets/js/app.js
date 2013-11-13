@@ -1,6 +1,8 @@
 "use strict";
+var _ = window._;
+var $ = window.$;
 var vocab;
-var run = [{"trad":"鐵","simp":"铁","pinyin":"tiě","gcr":"tiet","definition":"iron"}]
+var run = [{"trad":"鐵","simp":"铁","pinyin":"tiě","gcr":"tiet","definition":"iron"}];
 var cur = 0;
 var lastWrong = false;
 var incorrect = [];
@@ -10,10 +12,8 @@ var disabled = {"show": false, previous: true, show_hint: false, correct: true, 
 
 var showAns = function () {
   hidden = {entry: false, hint: false, answer: false, "alt-pinyin": false, "alt-char": false};
-  $("#hint").removeClass("invisible");
-  $("#answer").removeClass("invisible");
-  $("#alt-pinyin").removeClass("invisible");
-  $("#alt-char").removeClass("invisible");
+  $(".hint").removeClass("invisible");
+  $(".answer").removeClass("invisible");
   disabled = {"show": true, previous: true, show_hint: true, correct: false, incorrect: false};
   $("#show").prop( "disabled", true );
   $("#show_hint").prop( "disabled", true );
@@ -23,10 +23,8 @@ var showAns = function () {
 };
 var hideAns = function () {
   hidden = {entry: false, hint: true, answer: true, "alt-pinyin": true, "alt-char": true};
-  $("#hint").addClass("invisible");
-  $("#answer").addClass("invisible");
-  $("#alt-pinyin").addClass("invisible");
-  $("#alt-char").addClass("invisible");
+  $(".hint").addClass("invisible");
+  $(".answer").addClass("invisible");
   disabled = {"show": false, show_hint: false,previous: false,  correct: true, incorrect: true};
   $("#show").prop( "disabled", false );
   $("#show_hint").prop( "disabled", false );
@@ -42,57 +40,88 @@ var showNext = function () {
     $("#summary").html(run.length + " items, " + incorrect.length + " incorrect");
     $("#restart").removeClass("latent");
   }
-}
+};
 var showLast = function () {
   if(cur > 0) cur--;
   displayItem(run[cur]);
   showAns();
   if(lastWrong) incorrect.pop();
-}
+};
 
 var enableButtons = function () {
-  $("#show").on("click", showAns);
-  $("#show_hint").on("click", function () {
-    hidden.hint = false
-    $("#hint").removeClass("invisible");
-    disabled.show_hint = true
-    $(this).prop( "disabled", true );
+  $("#container").delegate("button", "click", function(e){
+    buttonHandlers[this.id]();
   });
-  $("#correct").on("click", function () {
+};
+
+var altDisplay;
+var listing = {
+  stimulus: "characters",
+  response: "pinyin"
+};
+var switchDisplay = function () {
+  var oldDisplay = $("#display").html();
+  $("#display").html(altDisplay);
+  altDisplay = oldDisplay;
+  listing = {
+    stimulus: listing.response,
+    response: listing.stimulus
+  };
+  $("#toggle_display").html("Prompt with " + listing.response);
+  displayItem(run[cur]);
+  showAns();
+};
+
+var buttonHandlers = {
+  show: showAns,
+  show_hint: function () {
+    hidden.hint = false;
+    $(".hint").removeClass("invisible");
+    disabled.show_hint = true;
+    $("#show_hint").prop( "disabled", true );
+  },
+  correct: function () {
     lastWrong = false;
     showNext();
-  });
-  $("#incorrect").on("click",function () {
+  },
+  incorrect: function () {
     incorrect.push(run[cur]);
     lastWrong = true;
     showNext();
-  });
-  $("#previous").on("click",showLast);
-  $("#toggle_format").on("click",function () {
+  },
+  previous: showLast,
+  toggle_format: function () {
     charFormat = {primary: charFormat.secondary, secondary: charFormat.primary};
+    var secondaryName =
+      charFormat.secondary === "trad" ?
+      "traditional" : "simplified";
+    $("#toggle_format").html(
+      "Switch to " + secondaryName + " characters"
+    );
     displayItem(run[cur]);
-  });
-  $("#review_all").on("click",function () {
+  },
+  review_all: function () {
     $("#summary").html("<p>Last run: " + run.length + " items, " + incorrect.length + " incorrect</p>" +
       "<p>Reviewing the entire list<p>"
     );
     run = _.shuffle(vocab);
     begin_run();
-  });
-  $("#review_incorrect").on("click",function () {
+  },
+  review_incorrect: function () {
     $("#summary").html("<p>Last run: " + run.length + " items, " + incorrect.length + " incorrect</p>" +
       "<p>Reviewing those missed<p>"
     );
     run = _.shuffle(incorrect);
     begin_run();
-  });
+  },
+  toggle_display: switchDisplay
 };
 
 var respond = function(name) {
   if(!disabled[name]) {
     $("#" + name).trigger("click");
   }
-}
+};
 var enableKeyShortcuts = function () {
     $(document).keydown(function (e) {
     switch(e.which){
@@ -125,7 +154,7 @@ var enableKeyShortcuts = function () {
 var displayItem = function (obj) {
   $("#entry").children("span").html(obj[charFormat.primary]);
   $("#hint").children("span").html(obj.definition);
-  $("#answer").children("span").html(obj.pinyin);
+  $("#pinyin").children("span").html(obj.pinyin);
   $("#alt-pinyin").children("span").html(obj.gcr);
   $("#alt-char").children("span").html(obj[charFormat.secondary]);
 };
@@ -154,5 +183,5 @@ $.when(loadList, doc_ready)
 
   enableButtons();
   enableKeyShortcuts();
-
+  altDisplay = $("#prompt-pinyin").html();
 });

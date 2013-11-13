@@ -15,3 +15,7 @@ Goals for the second sprint (Thursday 11/14)
 5. Write tests for the JS. (2hr)
 6. Let user shorten the list and review what he's already gone over. (3hr)
 7. Let user switch to character-recall mode at beginning of run. (3hr)
+
+Goals for third sprint:
+1. Convert to Sinatra app; generate HTML from a well-structured ERB.
+2. Store user vocab list on server and load to page.

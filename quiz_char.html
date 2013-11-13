@@ -11,18 +11,48 @@
 <div id="container">
 
   <div id="main">
-    <div id="entry" class="entry middle"><span lang="zh">說話</span></div>
-    <div id="hint" class="invisible right"><span>speak</span></div>
-    <div id="answer" class="invisible middle"><span>shuō huà</span></div>
-    <div id="alt-pinyin" class="invisible middle"><span>shot huah</span></div>
-    <div id="alt-char" class="invisible right"><span class="zh_text">说话</span></div>
+    <div id="display">
+    <div id="entry" class="entry primary middle"><span lang="zh">說話</span></div>
+    <div id="hint" class="hint invisible right"><span>speak</span></div>
+    <div id="pinyin" class="answer invisible middle"><span>shuō huà</span></div>
+    <div id="alt-pinyin" class="answer invisible middle"><span>shot huah</span></div>
+    <div id="alt-char" class="answer invisible right"><span class="zh_text">说话</span></div>
+    </div>
 
-    <div class="right"> <button id="previous" type="button" class="btn btn-default">Previous</button>Backspace</div>
-    <div class="middle"><button id="show_hint" type="button" class="btn btn-default">Show (English) Hint</button>B</div>
-    <div class="middle"><span> <button id="correct" type="button" class="btn btn-default">Known and Verified</button>V</span>
-    <span> <button id="incorrect" type="button" class="btn btn-default">Not Correct</button>N</span></div>
-    <div class="middle"><button id="show" type="button" class="btn btn-default">Show</button>Space</div>
-    <div class="right" class="btn btn-default"> <button id="toggle_format" type="button" class="btn btn-default">Switch character form</button></div>
+    <div class="right">
+      <div class="inline">
+      <button id="previous" type="button" class="btn btn-default">Previous</button><br>
+      <span class="key-shortcut">Backspace</span>
+      </div>
+    </div>
+    <div class="middle">
+      <div class="inline">
+        <button id="show_hint" type="button" class="btn btn-default">Show (English) Hint</button><br>
+        <span class="key-shortcut">B</span>
+      </div>
+    </div>
+    <div class="middle">
+      <div class="inline">
+        <button id="correct" type="button" class="btn btn-default">Known and Verified</button><br>
+        <span class="key-shortcut">V</span>
+      </div>
+      <div class="inline">
+        <button id="incorrect" type="button" class="btn btn-default">Needs Review</button><br>
+        <span class="key-shortcut">N</span>
+      </div>
+    </div>
+    <div class="middle">
+      <div class="inline">
+        <button id="show" type="button" class="btn btn-default">Show Answer</button><br>
+        <span class="key-shortcut">Space</span>
+      </div>
+    </div>
+    <div class="right" class="btn btn-default">
+      <button id="toggle_format" type="button" class="btn btn-default">Switch to simplified characters</button>
+    </div>
+    <div class="right" class="btn btn-default">
+      <button id="toggle_display" type="button" class="btn btn-default">Prompt with pinyin</button>
+    </div>
   </div>
   <div id="summary"></div>
     <div id="restart" class="latent">
@@ -31,6 +61,13 @@
     </div>
  </div>
 </div>
+<script type="text/template" id="prompt-pinyin">
+    <div id="pinyin" class="entry middle"><span>shuō huà</span></div>
+    <div id="alt-pinyin" class="entry middle"><span>shot huah</span></div>
+    <div id="hint" class="hint invisible right"><span>speak</span></div>
+    <div id="entry" class="answer invisible primary middle"><span lang="zh">說話</span></div>
+    <div id="alt-char" class="answer invisible right"><span class="zh_text">说话</span></div>
+</script>
   <script src="assets/js/jquery-1.10.2.js"></script>
   <script src="assets/js/bootstrap.js"></script>
   <script src="assets/js/underscore.js"></script>
