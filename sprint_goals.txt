@@ -7,3 +7,11 @@ Goals for the first sprint (Wednesday 11/13):
 5. When new word is displayed, user can go back to review the last word. (2hr)
 6. Old word animates in the direction of the selected category as the new word is being displayed. (3hr)
 7. Page is responsive down to cell-phone width. (2hr)
+
+Goals for the second sprint (Thursday 11/14)
+1,2. 6+7 above.
+3. Load JSON from a user file.
+4. Get JS out of the HTML file.
+5. Write tests for the JS.
+6. Let user shorten the list and review what he's already gone over.
+7. Let user switch to character-recall mode.

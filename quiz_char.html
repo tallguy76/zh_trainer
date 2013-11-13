@@ -10,16 +10,17 @@
   <div id="container">
 
   <div class="main">
-    <div id="entry" class="entry"><span lang="zh">說話</span></div>
+    <div id="entry" class="entry middle"><span lang="zh">說話</span></div>
     <div id="hint" class="hide right"><span>speak</span></div>
-    <div id="answer" class="hide  right"><span>shuō huà</span></div>
-    <div id="alt-pinyin" class="hide right"><span>shot huah</span></div>
-    <div id="alt-char" class="hide right"><span>说话</span></div>
-    <div class="right"><button id="show" type="button">Show</button>Space</div>
-    <div class="right"><button id="show_hint" type="button">Hint</button>B</div>
+    <div id="answer" class="hide middle"><span>shuō huà</span></div>
+    <div id="alt-pinyin" class="hide middle"><span>shot huah</span></div>
+    <div id="alt-char" class="hide right"><span class="zh_text">说话</span></div>
+
     <div class="right"> <button id="previous" type="button">Previous</button>Backspace</div>
-    <span> <button id="correct" type="button">Correct</button>V</span>
-    <span> <button id="incorrect" type="button">Not Correct</button>N</span>
+    <div class="middle"><button id="show_hint" type="button">Show (English) Hint</button>B</div>
+    <div class="middle"><span> <button id="correct" type="button">Known and Verified</button>V</span>
+    <span> <button id="incorrect" type="button">Not Correct</button>N</span></div>
+    <div class="middle"><button id="show" type="button">Show</button>Space</div>
     <div class="right"> <button id="toggle_format" type="button">Switch character form</button></div>
     <div id="summary"></div>
     <div id="restart" class="latent">
@@ -40,7 +41,7 @@
   var hidden = {entry: false, hint: true, answer: true, "alt-pinyin": true, "alt-char": true};
   var disabled = {"show": false, previous: true, show_hint: false, correct: true, incorrect: true};
 
-  var loadList =  $.get("assets/js/short.json", function (data) {
+  var loadList =  $.get("assets/js/imb_v.json", function (data) {
       vocab = $.parseJSON(data);
     });
   var showAns = function () {
@@ -92,11 +93,11 @@
   var doc_ready = $.Deferred();
   $(doc_ready.resolve);
   var displayItem = function (obj) {
-    $("#entry").html(obj[charFormat.primary]);
-    $("#hint").html(obj.definition);
-    $("#answer").html(obj.pinyin);
-    $("#alt-pinyin").html(obj.gcr);
-    $("#alt-char").html(obj[charFormat.secondary]);
+    $("#entry").children("span").html(obj[charFormat.primary]);
+    $("#hint").children("span").html(obj.definition);
+    $("#answer").children("span").html(obj.pinyin);
+    $("#alt-pinyin").children("span").html(obj.gcr);
+    $("#alt-char").children("span").html(obj[charFormat.secondary]);
   };
   var run_init = function () {
     cur = 0;

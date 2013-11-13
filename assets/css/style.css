@@ -1,6 +1,10 @@
 .entry {
   font-family: STFangsong;
-  font-size: 44px;
+  font-size: 45px;
+}
+.zh_text {
+  font-family: "LiSong Pro", STSong;
+  font-size: 24px;
 }
 .hide {
   visibility: hidden;
@@ -12,9 +16,18 @@ body {
   background-color: #EDF2C3;
 }
 #container {
-  max-width: 500px;
+  max-width: 420px;
+  margin: auto;
+  padding-top: 40px;
 }
 .right {
   position: relative;
-  left: 150px;
+  left: 300px;
+}
+.middle {
+  text-align: center;
+}
+.middpe {
+  position: relative;
+  left: 120px;
 }
